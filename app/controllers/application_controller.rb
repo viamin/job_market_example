@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return if session[:current_user_id].nil?
+
     session[:current_user_type].safe_constantize.find(session[:current_user_id])
   end
 
