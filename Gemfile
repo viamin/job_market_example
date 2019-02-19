@@ -51,7 +51,6 @@ group :development do
   gem 'web-console', '>= 3.3.0'
 end
 
-gem 'bulma-rails', '~> 0.7.4'
 gem 'pundit', '~> 2.0'
 gem 'slim-rails', '~> 3.2'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
