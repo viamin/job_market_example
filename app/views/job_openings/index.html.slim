@@ -1,0 +1,21 @@
+h1 Listing Job Openings
+
+table
+  thead
+    tr
+      th Company
+      th Job Title
+      th(colspan=2)
+
+  tbody
+    - @job_openings.each do |job_opening|
+      tr
+        td = job_opening.employer.name
+        td = link_to job_opening.title, job_opening
+        td = link_to 'Edit', edit_job_opening_path(job_opening) if policy(job_opening).update?
+        td = link_to 'Destroy', job_opening, data: { confirm: 'Are you sure?' }, method: :delete if policy(job_opening).destroy?
+
+br
+
+- if user_is_employer?
+  = link_to 'New Job opening', new_job_opening_path

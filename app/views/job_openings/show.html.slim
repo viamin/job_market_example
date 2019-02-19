@@ -1,0 +1,17 @@
+p#notice = notice
+
+h2.title.is-2 = @job_opening.employer.name
+h4.subtitle.is-4 = @job_opening.title
+
+.content
+  p = @job_opening.description
+
+  - if @job_opening.can_apply?(current_user)
+    = button_to 'Apply'
+  - elsif @job_opening.applied?(current_user)
+    a.button(disabled='disabled') Already applied
+
+- if policy(@job_opening).edit?
+  => link_to 'Edit', edit_job_opening_path(@job_opening)
+  '|
+=< link_to 'Back', job_openings_path

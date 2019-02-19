@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: employers
@@ -19,5 +21,11 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { SecureRandom.base64(20) }
     name { Faker::Company.name }
+
+    trait :with_job_openings do
+      after(:create) do |employer, _evaluator|
+        create_list(:job_opening, 5, employer: employer)
+      end
+    end
   end
 end

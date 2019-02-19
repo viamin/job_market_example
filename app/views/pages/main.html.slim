@@ -1,0 +1,14 @@
+h1.title.is-1 Job Market
+p Please log in to participate in the market!
+
+.columns
+  .column
+  .column.is-one-quarter
+    .box
+      p = link_to 'Job Seeker Login', login_applicants_path, class: 'button is-primary'
+      p = link_to 'New Job Seeker Registration', new_applicant_path
+  .column.is-one-quarter
+    .box
+      p = link_to 'Employer Login', login_employers_path, class: 'button'
+      p = link_to 'New Employer Registration', new_employer_path
+  .column
