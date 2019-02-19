@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
   before_action :ensure_logged_in
+  before_action :set_current_user
 
   private
 
@@ -10,6 +11,10 @@ class ApplicationController < ActionController::Base
     return if session[:current_user_id].nil?
 
     session[:current_user_type].safe_constantize.find(session[:current_user_id])
+  end
+
+  def set_current_user
+    @current_user = current_user
   end
 
   def ensure_logged_in

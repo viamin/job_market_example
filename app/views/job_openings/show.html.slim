@@ -6,12 +6,12 @@ h4.subtitle.is-4 = @job_opening.title
 .content
   p = @job_opening.description
 
-  - if @job_opening.can_apply?(current_user)
-    = button_to 'Apply'
-  - elsif @job_opening.applied?(current_user)
+  - if @job_opening.can_apply?(@current_user)
+    = button_to 'Apply', apply_job_opening_path(@job_opening), class: 'button is-primary', method: :put
+  - elsif @job_opening.applied?(@current_user)
     a.button(disabled='disabled') Already applied
 
 - if policy(@job_opening).edit?
   => link_to 'Edit', edit_job_opening_path(@job_opening)
   '|
-=< link_to 'Back', job_openings_path
+=< link_to 'Back', user_is_employer? ? employer_path(@current_user) : job_openings_path

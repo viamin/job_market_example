@@ -18,4 +18,14 @@
 
 class JobOpening < ApplicationRecord
   belongs_to :employer
+  has_many :job_applications
+  has_many :applicants, through: :job_applications
+
+  def applied?(applicant)
+    applicants.include?(applicant)
+  end
+
+  def can_apply?(applicant)
+    applicant.instance_of?(Applicant) && !applied?(applicant)
+  end
 end

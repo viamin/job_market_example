@@ -1,0 +1,18 @@
+h2.title.is-2 = "#{@employer.name} Job openings"
+
+.box
+  table.table
+    thead
+      tr
+        th(colspan=2) Job Listing
+        th Applications
+    tbody
+    - @employer.job_openings.each do |job_opening|
+      tr
+        td(colspan=2) = job_opening.title
+        td = job_opening.job_applications.count
+      - job_opening.job_applications.each do |application|
+        tr
+          td
+          td(colspan=2) = application.applicant.name
+= link_to 'Post new listing', new_job_opening_path, class: 'button is-primary'

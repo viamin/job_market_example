@@ -20,10 +20,15 @@ require 'rails_helper'
 
 RSpec.describe Applicant, type: :model do
   let(:applicant) { create(:applicant) }
+  let(:dupe) { build(:applicant, email: applicant.email) }
 
   context 'when creating' do
     it 'is valid' do
       expect(applicant).to be_valid
+    end
+
+    it 'is invalid with duplicate email' do
+      expect(dupe).to be_invalid
     end
   end
 end

@@ -20,10 +20,15 @@ require 'rails_helper'
 
 RSpec.describe Employer, type: :model do
   let(:employer) { create(:employer) }
+  let(:dupe) { build(:employer, email: employer.email) }
 
   context 'when creating' do
     it 'is valid' do
       expect(employer).to be_valid
+    end
+
+    it 'is invalid with duplicate email' do
+      expect(dupe).to be_invalid
     end
   end
 end

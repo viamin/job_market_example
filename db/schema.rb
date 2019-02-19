@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_17_205759) do
+ActiveRecord::Schema.define(version: 2019_02_19_015548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'citext'
   enable_extension 'plpgsql'
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 2019_02_17_205759) do
     t.index ['email'], name: 'index_employers_on_email', unique: true
   end
 
+  create_table 'job_applications', force: :cascade do |t|
+    t.bigint 'applicant_id'
+    t.bigint 'job_opening_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['applicant_id'], name: 'index_job_applications_on_applicant_id'
+    t.index ['job_opening_id'], name: 'index_job_applications_on_job_opening_id'
+  end
+
   create_table 'job_openings', force: :cascade do |t|
     t.bigint 'employer_id'
     t.string 'title'
@@ -44,5 +53,7 @@ ActiveRecord::Schema.define(version: 2019_02_17_205759) do
     t.index ['employer_id'], name: 'index_job_openings_on_employer_id'
   end
 
+  add_foreign_key 'job_applications', 'applicants'
+  add_foreign_key 'job_applications', 'job_openings'
   add_foreign_key 'job_openings', 'employers'
 end

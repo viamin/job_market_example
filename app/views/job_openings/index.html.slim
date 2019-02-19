@@ -11,9 +11,11 @@ table
     - @job_openings.each do |job_opening|
       tr
         td = job_opening.employer.name
-        td = link_to job_opening.title, job_opening
+        td = job_opening.title
+        - if user_is_applicant?
+          td = job_opening.applied?(@current_user) ? 'Applied' : ''
+        td = link_to 'View description', job_opening
         td = link_to 'Edit', edit_job_opening_path(job_opening) if policy(job_opening).update?
-        td = link_to 'Destroy', job_opening, data: { confirm: 'Are you sure?' }, method: :delete if policy(job_opening).destroy?
 
 br
 

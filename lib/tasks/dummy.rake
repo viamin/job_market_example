@@ -5,7 +5,7 @@ namespace :dummy do
   task job_openings: :environment do
     puts 'Creating 5 Employers with 5 Job Openings each'
     5.times do
-      FactoryBot.create(:employer, :with_job_openings)
+      FactoryBot.create(:employer, :with_job_openings, password: '12345')
     end
   end
 end

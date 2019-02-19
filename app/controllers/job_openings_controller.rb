@@ -1,17 +1,31 @@
 # frozen_string_literal: true
 
 class JobOpeningsController < ApplicationController
-  before_action :set_job_opening, only: %i[show edit update destroy]
+  before_action :set_job_opening, only: %i[show edit update destroy apply]
+
+  # PUT /job_openings/1/apply
+  def apply
+    if @job_opening.can_apply?(current_user)
+      JobApplication.create(job_opening: @job_opening, applicant: current_user)
+      notice = "You've successfully applied to this job"
+    else
+      notice = "You can't apply to that job opening"
+    end
+    redirect_to @job_opening, notice: notice
+  end
 
   # GET /job_openings
   # GET /job_openings.json
   def index
     @job_openings = JobOpening.all
+    @current_user = current_user
   end
 
   # GET /job_openings/1
   # GET /job_openings/1.json
-  def show; end
+  def show
+    @current_user = current_user
+  end
 
   # GET /job_openings/new
   def new
@@ -24,7 +38,7 @@ class JobOpeningsController < ApplicationController
   # POST /job_openings
   # POST /job_openings.json
   def create
-    @job_opening = JobOpening.new(job_opening_params)
+    @job_opening = JobOpening.new(job_opening_params.merge(employer: current_user))
 
     respond_to do |format|
       if @job_opening.save
@@ -70,6 +84,6 @@ class JobOpeningsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_opening_params
-    params.fetch(:job_opening, {})
+    params.require(:job_opening).permit(:title, :description)
   end
 end
